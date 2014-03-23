@@ -387,12 +387,12 @@ status_t AudioPolicyManager::setDeviceConnectionState(audio_devices_t device,
         if(device == AUDIO_DEVICE_OUT_FM) {
             if (state == AudioSystem::DEVICE_STATE_AVAILABLE) {
                 ALOGV("setDeviceConnectionState() changeRefCount Inc");
-                mOutputs.valueFor(mPrimaryOutput)->changeRefCount(AudioSystem::FM, 1);
+                mOutputs.valueFor(mPrimaryOutput)->changeRefCount(AudioSystem::MUSIC, 1);
                 newDevice = (audio_devices_t)(AudioPolicyManagerBase::getNewDevice(mPrimaryOutput, false) | AUDIO_DEVICE_OUT_FM);
             }
             else {
                 ALOGV("setDeviceConnectionState() changeRefCount Dec");
-                mOutputs.valueFor(mPrimaryOutput)->changeRefCount(AudioSystem::FM, -1);
+                mOutputs.valueFor(mPrimaryOutput)->changeRefCount(AudioSystem::MUSIC, -1);
             }
 
             AudioParameter param = AudioParameter();
@@ -937,7 +937,7 @@ status_t AudioPolicyManager::startOutput(audio_io_handle_t output,
         }
 
 #ifdef QCOM_FM_ENABLED
-        if(stream == AudioSystem::FM && output == getA2dpOutput()) {
+        if(stream == AudioSystem::MUSIC && output == getA2dpOutput()) {
             muteWaitMs = setOutputDevice(output, newDevice, true);
         } else
 #endif
@@ -1510,7 +1510,7 @@ AudioPolicyManager::routing_strategy AudioPolicyManager::getStrategy(
     case AudioSystem::TTS:
     case AudioSystem::MUSIC:
 #ifdef QCOM_FM_ENABLED
-    case AudioSystem::FM:
+    case AudioSystem::MUSIC:
 #endif
         return STRATEGY_MEDIA;
     case AudioSystem::ENFORCED_AUDIBLE:
@@ -2015,7 +2015,7 @@ status_t AudioPolicyManager::checkAndSetVolume(int stream,
     // - the force flag is set
     if (volume != mOutputs.valueFor(output)->mCurVolume[stream] ||
 #ifdef QCOM_FM_ENABLED
-            (stream == AudioSystem::FM) ||
+            (stream == AudioSystem::MUSIC) ||
 #endif
             force) {
         mOutputs.valueFor(output)->mCurVolume[stream] = volume;
@@ -2025,12 +2025,16 @@ status_t AudioPolicyManager::checkAndSetVolume(int stream,
         if (stream == AudioSystem::BLUETOOTH_SCO) {
             mpClientInterface->setStreamVolume(AudioSystem::VOICE_CALL, volume, output, delayMs);
 #ifdef QCOM_FM_ENABLED
-        } else if (stream == AudioSystem::FM) {
+        } else if (stream == AudioSystem::MUSIC) {
             float fmVolume = -1.0;
             fmVolume = computeVolume(stream, index, output, device);
             if (fmVolume >= 0) {
                 if(output == mPrimaryOutput)
-                    mpClientInterface->setFmVolume(fmVolume, delayMs);
+                    AudioParameter param = AudioParameter();
+					param.addFloat(String8("fm_volume"), fmVolume);
+					ALOGV("checkAndSetVolume setParameters fm_volume, volume=:%f delay=:%d",fmVolume,delayMs*2);
+					//Double delayMs to avoid sound burst while device switch.
+					mpClientInterface->setParameters(mPrimaryOutput, param.toString(), delayMs*2);
                 else if(mHasA2dp && output == getA2dpOutput())
                     mpClientInterface->setStreamVolume((AudioSystem::stream_type)stream, volume, output, delayMs);
             }
