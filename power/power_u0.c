@@ -203,7 +203,7 @@ static int boostpulse_open(struct lge_power_module *lge)
                 lge->boostpulse_fd = open(BOOSTPULSE_INTERACTIVE, O_WRONLY);
             else if (strncmp(governor, "smartassV2", 10) == 0)
                 lge->boostpulse_fd = open(BOOSTPULSE_SMARTASS2, O_WRONLY);
-            else if (strncmp(governor, "SmartassH3", 10) == 0)
+            else if (strncmp(governor, "smartassH3", 10) == 0)
                 lge->boostpulse_fd = open(BOOSTPULSE_SMARTASSH3, O_WRONLY);
 
             if (lge->boostpulse_fd < 0 && !lge->boostpulse_warned) {
