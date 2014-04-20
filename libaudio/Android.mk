@@ -9,7 +9,7 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := \
     audio_hw_hal.cpp \
     HardwarePinSwitching.c \
-    AudioHardware_cad.cpp
+    AudioHardware.cpp
 
 ifeq ($(BOARD_HAVE_BLUETOOTH),true)
   LOCAL_CFLAGS += -DWITH_A2DP
