@@ -36,13 +36,16 @@ TARGET_QCOM_HDMI_OUT := false
 TARGET_USES_ION := true
 TARGET_NO_HW_VSYNC := true
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
-BOARD_EGL_CFG := device/sony/tamsui-common/config/egl.cfg
+BOARD_EGL_CFG := device/lge/msm7x27a-common/config/egl.cfg
 BOARD_USE_MHEAP_SCREENSHOT := true
 TARGET_DOESNT_USE_FENCE_SYNC := true
 QCOM_BSP_WITH_GENLOCK := true
 
 # libEGL: allow devices to workaround Google bug 10194508
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
+
+# Legacy
+TARGET_QCOM_DISPLAY_VARIANT := legacy
 
 # Add h/w acceleration in browser
 WITH_JIT := true
