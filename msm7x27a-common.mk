@@ -50,7 +50,7 @@ PRODUCT_PACKAGES += \
 # Wifi
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-	$(LOCAL_PATH)/prebuilt/wlan.ko:system/lib/modules/wlan.ko
+	$(LOCAL_PATH)/prebuild/wlan.ko:system/lib/modules/wlan.ko
 	
 # display HALS
 PRODUCT_PACKAGES += \
