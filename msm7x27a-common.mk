@@ -1,5 +1,7 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
+$(call inherit-product, device/common/gps/gps_us_supl.mk)
+
 DEVICE_PACKAGE_OVERLAYS += device/lge/msm7x27a-common/overlay
 
 PRODUCT_COPY_FILES += \
@@ -47,8 +49,9 @@ PRODUCT_PACKAGES += \
 
 # Wifi
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
-
+    $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+	$(LOCAL_PATH)/prebuilt/wlan.ko:system/lib/modules/wlan.ko
+	
 # display HALS
 PRODUCT_PACKAGES += \
     libgenlock \
@@ -71,9 +74,7 @@ PRODUCT_PACKAGES += \
 
 # Gps hal
 PRODUCT_PACKAGES += \
-    gps.msm7x27a \
-    gps.conf \
-    sap.conf
+    gps.msm7x27a
 
 PRODUCT_PACKAGES += \
     power.msm7x27a
@@ -112,11 +113,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libQWiFiSoftApCfg
 
-ifeq ($(WITH_QC_PERF),true)
 PRODUCT_PACKAGES += \
-    libloc_api-rpc-qc
-endif
-
+    WCN1314_qcom_wlan_nv.bin \
+    WCN1314_qcom_fw.bin \
+    WCN1314_cfg.dat \
+    WCN1314_qcom_cfg.ini	
+	
 # Do not power down SIM card when modem is sent to Low Power Mode.
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.radio.apm_sim_not_pwdn=1
