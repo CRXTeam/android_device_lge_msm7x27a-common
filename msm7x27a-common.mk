@@ -112,6 +112,15 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libQWiFiSoftApCfg
 
+PRODUCT_PACKAGES += \
+    WCN1314_qcom_wlan_nv.bin \
+    WCN1314_qcom_fw.bin \
+    WCN1314_cfg.dat \
+    WCN1314_qcom_cfg.ini
+
+PRODUCT_PACKAGES += \
+    lights.$(TARGET_DEVICE)
+
 # Do not power down SIM card when modem is sent to Low Power Mode.
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.radio.apm_sim_not_pwdn=1
