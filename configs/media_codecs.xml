@@ -149,5 +149,4 @@
         <MediaCodec name="OMX.ffmpeg.hevc.decoder" type="video/hevc"/>
         <MediaCodec name="OMX.ffmpeg.vtrial.decoder" type="video/ffmpeg"/>
     </Decoders>
-    </Decoders>
 </MediaCodecs>
