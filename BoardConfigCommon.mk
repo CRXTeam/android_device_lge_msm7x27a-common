@@ -124,3 +124,7 @@ WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_AP           := "ap"
 WIFI_DRIVER_FW_PATH_PARAM        := "/data/misc/wifi/fwpath"
 BOARD_LEGACY_NL80211_STA_EVENTS  := true
+
+# External apps on SD
+TARGET_EXTERNAL_APPS = sdcard1
+
