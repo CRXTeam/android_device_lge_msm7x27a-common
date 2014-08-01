@@ -192,7 +192,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=/system/lib/libqc-opt.so
 
 # Enable Torch
-PRODUCT_PACKAGES += Torch
+PRODUCT_PACKAGES += \
+    Torch \
+    DSPManager
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_MANUFACTURER := LGE
